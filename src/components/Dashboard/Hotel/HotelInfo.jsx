@@ -1,19 +1,35 @@
 import styled from 'styled-components';
 import useHotels from '../../../hooks/api/useHotels'
 import { Typography } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ErrorMessage from '../ErrorMessage';
+import useHotelRooms from '../../../hooks/api/useHotelRooms';
+import { BsPerson, BsPersonFill } from 'react-icons/bs'
+import useTicket from '../../../hooks/api/useTicket';
+import RoomBtn from './RoomBtn';
 
 export default function Hotel() {
+  const { userTicket } = useTicket();
   const { hotels, hotelError } = useHotels();
   const [selectedHotel, setSelectedHotel] = useState();
+  const { hotelWithRooms, hotelWithRoomsLoading, hotelWithRoomsError, getHotelWithRooms } = useHotelRooms(selectedHotel);
+  const [selectedRoom, setSelectedRoom] = useState();
+
+  useEffect(() => {
+    if(selectedHotel) {
+      getHotelWithRooms();
+    }
+
+  }, [selectedHotel])
 
   return (
     <>
       <StyledTypography variant='h4'>Escolha de hotel e quarto</StyledTypography>
       {
-        hotelError ? 
-        <ErrorMessage>Ocorreu um erro!</ErrorMessage>
+        userTicket && (!userTicket.TicketType.includesHotel || userTicket.TicketType.isRemote) ? 
+          <ErrorMessage>Sua modalidade de ingresso não inclui hospedagem Prossiga para a escolha de atividades</ErrorMessage>
+        : hotelError ?
+          <ErrorMessage>Você precisa ter confirmado pagamento antes de fazer a escolha de hospedagem</ErrorMessage>
         :
           hotels ? 
             <>        
@@ -23,7 +39,11 @@ export default function Hotel() {
                     <HotelButton 
                       key={hotel.id}
                       disabled={selectedHotel === hotel.id}
-                      onClick={() => setSelectedHotel(hotel.id)}
+                      onClick={() => {
+                        setSelectedHotel(hotel.id);
+                        () => getHotelWithRooms(hotel.id);
+                      } 
+                    }
                     >
                       <img src={hotel.image} alt={hotel.name} />
                       <Name>{hotel.name}</Name>
@@ -41,6 +61,28 @@ export default function Hotel() {
                   ))
                 }
               </HotelContainer>
+
+              { selectedHotel ? 
+                <>
+                  <Information>Ótima pedida! Agora escolha seu quarto</Information>
+                    { hotelWithRooms ? 
+                        <HotelContainer>
+                          { 
+                            hotelWithRooms.Rooms.map(room => (
+                              <RoomBtn 
+                                key={room.id}
+                                selectedRoom={selectedRoom}
+                                setSelectedRoom={setSelectedRoom}
+                                room={room}
+                              />
+                            ))
+                          }
+                        </HotelContainer>
+                      : <></>
+                    }
+                </>
+                : <></>
+              }
             </>
         : <></>
       }
@@ -96,6 +138,18 @@ const HotelButton = styled.button`
     height: 109px;
     border-radius: 5px;
   }
+`;
+
+const RoomButton = styled.button`
+  width: 190px;
+  height: 45px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 11px;
+
+  border-radius: 10px;
+  border: 1px solid #CECECE;
 `;
 
 const Name = styled.h1`

@@ -95,7 +95,7 @@ export default function PaymentCard(props) {
                     <PaymentInput
                         required
                         type="text"
-                        width='60%'
+                        width='67%'
                         placeholder="Valid Thru"
                         name="expiry"
                         value={state.expiry}

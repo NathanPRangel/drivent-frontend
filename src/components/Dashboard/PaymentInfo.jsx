@@ -9,7 +9,7 @@ import { getUserTicket } from "../../services/ticketApi";
 
 
 export default function Payment(props) {
-  const { ticketReserved, setTicketReserved } = props
+  const { ticketReserved, setTicketReserved, refresh, setRefresh } = props
   const { enrollment, enrollmentError } = useEnrollment();
 
   const { createTicket } = useTicket();

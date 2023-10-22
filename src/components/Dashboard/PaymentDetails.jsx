@@ -1,37 +1,12 @@
 import { Typography } from "@mui/material";
 import styled from 'styled-components';
 import check from '../../assets/images/circle-check-fill.png'
-import { useEffect, useState } from "react";
-import useTicket from "../../hooks/api/useTicket";
-import usePayment from "../../hooks/api/usePayment";
+import { useState } from "react";
 import PaymentCard from "../Card";
 
 export default function PaymentDetails(props) {
-    const { ticketReserved, setTicketReserved, ticketPaid, setTicketPaid } = props
-    const [cardNumber, setCardNumber] = useState('')
-    const [name, setName] = useState('')
-    const [validThru, setValidThru] = useState('')
-    const [cvc, setCVC] = useState('')
+    const { ticketPaid, setTicketPaid, ticketTypeName, ticketPrice, ticketId, ticketStatus } = props
     const [paymentFinished, setPaymentFinished] = useState(false)
-    const { getUserTicket } = useTicket()
-    const [ticketTypeName, setTicketTypeName] = useState('')
-    const [ticketPrice, setTicketPrice] = useState('')
-    const [ticketId, setTicketId] = useState('')
-
-    const { processPayment } = usePayment()
-
-
-    useEffect(async () => {
-        try {
-            const userTicket = await getUserTicket()
-            console.log(userTicket)
-            setTicketTypeName(userTicket.TicketType.name)
-            setTicketPrice(userTicket.TicketType.price)
-            setTicketId(userTicket.id)
-        } catch (err) {
-            console.log(err)
-        }
-    }, [ticketReserved])
 
     return (
         <>
@@ -45,7 +20,7 @@ export default function PaymentDetails(props) {
                     R$ {ticketPrice}
                 </h2>
             </Ticket>
-            {ticketPaid
+            {ticketStatus === 'PAID'
                 ?
                 (
                     <>
