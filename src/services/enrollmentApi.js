@@ -14,7 +14,7 @@ export async function getPersonalInformations(token) {
   const response = await api.get('/enrollments', {
     headers: {
       Authorization: `Bearer ${token}`,
-    },
+    }
   });
 
 

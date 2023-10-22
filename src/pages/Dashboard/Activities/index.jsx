@@ -1,3 +1,7 @@
+import ActivitiesTab from "../../../components/Activities";
+
 export default function Activities() {
-  return 'Atividades: Em breve!';
+  return (
+    <ActivitiesTab/>
+  )
 }

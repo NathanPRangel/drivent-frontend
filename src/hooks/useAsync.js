@@ -13,10 +13,12 @@ export default function useAsync(handler, immediate = true) {
       const data = await handler(...args);
       setData(data);
       setLoading(false);
+
       return data;
     } catch (err) {
-      setError(error);
+      setError(err);
       setLoading(false);
+
       throw err;
     }
   };
