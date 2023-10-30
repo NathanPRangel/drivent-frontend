@@ -8,3 +8,68 @@
 body {
   font-family: "Lexend Deca", sans-serif;
 }
+
+.certificate-title {
+  font-family: Roboto;
+  font-size: 128px;
+  font-weight: 400;
+  line-height: 150px;
+  letter-spacing: 0em;
+  text-align: center;
+  color: #000000;
+  margin-top: 50px;
+  margin-bottom: 19px;
+}
+
+.certificate-text {
+  font-family: Roboto;
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 38px;
+  letter-spacing: 0em;
+  text-align: center;
+  color: #000000;
+}
+
+.certificate-name {
+  font-family: Roboto;
+  font-size: 96px;
+  font-weight: 400;
+  line-height: 113px;
+  letter-spacing: 0em;
+  text-align: center;
+  color: #000000;
+  margin-top: 19px;
+  margin-bottom: 10px;
+}
+
+.certificate-description {
+  font-family: Roboto;
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 38px;
+  letter-spacing: 0em;
+  text-align: center;
+  color: #000000;
+  margin-bottom: 14px;
+}
+
+.image {
+  width: 117px;
+  height: 117px;
+  margin-top: 17px;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.style {
+  width: 127.06px;
+  height: 816px;
+  border-radius: 20px, 0px, 0px, 20px;
+  background-color: #DDDDDD;
+  box-shadow: 0px 4px 10px 0px #00000040;
+}

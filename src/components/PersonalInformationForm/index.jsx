@@ -21,6 +21,8 @@ import { InputWrapper } from './InputWrapper';
 import { ErrorMsg } from './ErrorMsg';
 import { ufList } from './ufList';
 import FormValidations from './FormValidations';
+import { useContext } from 'react';
+import UserContext from '../../contexts/UserContext';
 
 dayjs.extend(CustomParseFormat);
 
@@ -29,6 +31,8 @@ export default function PersonalInformationForm() {
   const { getCep } = useCep();
   const { enrollment } = useEnrollment();
   const { saveEnrollmentLoading, saveEnrollment } = useSaveEnrollment();
+
+  const { setNome, setCPF } = useContext(UserContext);
 
   const {
     handleSubmit,
@@ -59,6 +63,8 @@ export default function PersonalInformationForm() {
 
       try {
         await saveEnrollment(newData);
+        setNome(data.name);
+        setCPF(data.cpf);
         toast('Informações salvas com sucesso!');
       } catch (err) {
         console.log(err.response.data.message)

@@ -6,11 +6,15 @@ import { useState } from "react";
 import useTicket from "../../hooks/api/useTicket";
 import { toast } from 'react-toastify';
 import { getUserTicket } from "../../services/ticketApi";
+import UserContext from "../../contexts/UserContext";
+import { useContext } from "react";
 
 
 export default function Payment(props) {
   const { ticketReserved, setTicketReserved, refresh, setRefresh } = props
   const { enrollment, enrollmentError } = useEnrollment();
+
+  const { setModalidade } = useContext(UserContext);
 
   const { createTicket } = useTicket();
 
@@ -24,6 +28,7 @@ export default function Payment(props) {
       try {
         await createTicket(1);
         toast('Ingresso reservado com sucesso!');
+        setModalidade(type);
         setDisabled(true);
         setTicketReserved(true)
         //navigate('/sign-in');
@@ -35,6 +40,7 @@ export default function Payment(props) {
       try {
         await createTicket(2);
         toast('Ingresso reservado com sucesso!');
+        setModalidade(type);
         setDisabled(true);
         setTicketReserved(true)
         //navigate('/sign-in');
@@ -46,6 +52,7 @@ export default function Payment(props) {
       try {
         await createTicket(3);
         toast('Ingresso reservado com sucesso!');
+        setModalidade(type);
         setDisabled(true);
         setTicketReserved(true)
         //navigate('/sign-in');

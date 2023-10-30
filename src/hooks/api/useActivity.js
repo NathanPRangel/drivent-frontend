@@ -18,7 +18,14 @@ export default function useActivity() {
         loading: ActivityPostLoading,
         error: ActivityPostError,
         act: postActivities,
-    } = useAsync((data) => getActivity.postActivities(data, token), true);
+    } = useAsync((data) => getActivity.postActivities(data, token), false);
+
+    const {
+        data: activitiesByUser,
+        loading: ActivityByUserLoading,
+        error: ActivityByUserError,
+        act: getActivitiesByUser,
+    } = useAsync((data) => getActivity.getActivitiesByUser(token), true);
 
     return {
         activities,
@@ -27,6 +34,10 @@ export default function useActivity() {
         getActivities,
         ActivityPostLoading,
         ActivityPostError,
-        postActivities
+        postActivities,
+        activitiesByUser,
+        ActivityByUserLoading,
+        ActivityByUserError,
+        getActivitiesByUser
     }
 }
